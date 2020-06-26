@@ -74,17 +74,26 @@ DATA = [
 
 def run():
 
-    all_python_devs =  # Using filter, generate a list with all the python devs
-    all_Platzi_workers =  # Using filter, generate a list with all the Platzi workers
-    adults =  # Using filter, generate a list with all people over 18 years old
-    workers =  # Using map, generate a new list of people with a key 'homeless' with True or False values, if 'organization' have something or not
-    old_people =  # Using map, generate a new list of people with a key 'old' with True or False values, if 'age' is greater than 30 or not
+
+    all_python_devs = filter( lambda  person: person["language"]=="python", DATA )
+
+    all_Platzi_workers = filter( lambda  person: person["organization"]=="Platzi", DATA )
+
+    adults = filter( lambda  person: person["age"]>18, DATA )
+
+    workers = list(map( lambda person: dict( person, **{'homeless': True}) 
+                                             if person["organization"] == "" 
+                                             else dict(person, **{'homeless': False})  , DATA))
+
+    old_people = list(map( lambda person: dict( person, **{'old': True}) 
+                                                if person["age"] > 30 
+                                                else dict(person, **{'old': False})  , DATA))
 
     print('Python devs: ')
     for dev in all_python_devs:
         print(dev['name'])
     print('\n\n')
-
+    
     print('Platzi workers: ')
     for worker in all_Platzi_workers:
         print(worker['name'])
